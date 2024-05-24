@@ -17,17 +17,27 @@ abstract public class Mover {
 
   // moves the mover one square in its alotted direction, allowing it to move off screen  
   public void step() {
+    if(movesRight) {
+
+    }
+    else { // moves left 
+      // what are we going to do if one of these things moves off of the screen?
+      // how are new things generated?  is there a pattern?
+      if(this.xVal == 0) {
+
+      }
+    }
     return;
   }
 
   // determines whether this Mover overlaps with the given x coordinate in its Row
-  // inclusive interval 
+  // semi open interval 
   // input x should always be a non negative integer
   public boolean overlaps(int x) {
     if(x < 0) {
       throw new IllegalArgumentException("x position should not be negative");
     }
-    if(this.xVal <= x && x <= this.xVal + this.size) {
+    if(this.xVal <= x && x < this.xVal + this.size) {
       return true;
     }
     else {

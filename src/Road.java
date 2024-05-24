@@ -6,8 +6,16 @@ import java.util.ArrayList;
 public class Road implements Row {
   private final int speed;
   private ArrayList<Vehicle> vehicles;
-  Road(int speed) {
+  Road(int speed, ArrayList<Vehicle> vehicles) {
+    if(speed < 1) {
+      throw new IllegalArgumentException("Road must have a positive integer speed");
+    }
     this.speed = speed;
+    this.vehicles = vehicles;
+  }
+
+  Road(int speed) {
+    this(speed, new ArrayList<Vehicle>());
   }
 
   Road() {
@@ -28,9 +36,9 @@ public class Road implements Row {
   public boolean stableGround(int xVal) {
     for(Vehicle v : this.vehicles) {
       if(v.overlaps(xVal)) {
-        return true;
+        return false;
       }
     }
-    return false;
+    return true;
   }
 }
