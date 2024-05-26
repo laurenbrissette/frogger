@@ -12,17 +12,17 @@ public class Tests {
   public void testStableGround() {
     // Test EndZone, always true
     EndZone end = new EndZone();
-    Assert.assertEquals(true, end.stableGround(1));
-    Assert.assertEquals(true, end.stableGround(0));
+    Assert.assertTrue(end.stableGround(1));
+    Assert.assertTrue(end.stableGround(0));
 
     // Test LilyRiver, true if there is a Lily at the given int xPosition
     LilyRiver lily = new LilyRiver(new ArrayList<Lily>(Arrays.asList(new Lily(0), 
     new Lily(2), new Lily(4))));
     LilyRiver emptyLily = new LilyRiver(new ArrayList<Lily>());
-    Assert.assertEquals(false, lily.stableGround(1));
-    Assert.assertEquals(true, lily.stableGround(0));
-    Assert.assertEquals(true, lily.stableGround(2));
-    Assert.assertEquals(false, emptyLily.stableGround(1));
+    Assert.assertFalse(lily.stableGround(1));
+    Assert.assertTrue(lily.stableGround(0));
+    Assert.assertTrue(lily.stableGround(2));
+    Assert.assertFalse(emptyLily.stableGround(1));
 
     // Test LogRiver, true if there is a Log at the given int xPosition 
     LogRiver logRight = new LogRiver(new ArrayList<Log>(Arrays.asList(new Log(1, 2, true),
@@ -31,36 +31,36 @@ public class Tests {
     new Log(6, 3, false))));
     // semi open interval 
     // note opposite behavior from Road
-    Assert.assertEquals(false, logRight.stableGround(0));
-    Assert.assertEquals(false, logLeft.stableGround(0));
-    Assert.assertEquals(true, logRight.stableGround(1));
-    Assert.assertEquals(true, logLeft.stableGround(1));
-    Assert.assertEquals(true, logRight.stableGround(2));
-    Assert.assertEquals(true, logLeft.stableGround(2));
-    Assert.assertEquals(false, logRight.stableGround(3));
-    Assert.assertEquals(false, logLeft.stableGround(3));
+    Assert.assertFalse(logRight.stableGround(0));
+    Assert.assertFalse(logLeft.stableGround(0));
+    Assert.assertTrue(logRight.stableGround(1));
+    Assert.assertTrue(logLeft.stableGround(1));
+    Assert.assertTrue(logRight.stableGround(2));
+    Assert.assertTrue(logLeft.stableGround(2));
+    Assert.assertFalse(logRight.stableGround(3));
+    Assert.assertFalse(logLeft.stableGround(3));
 
     // Test SafeStrip, always true
     SafeStrip safe = new SafeStrip();
-    Assert.assertEquals(true, safe.stableGround(1));
-    Assert.assertEquals(true, safe.stableGround(0));
+    Assert.assertTrue(safe.stableGround(1));
+    Assert.assertTrue(safe.stableGround(0));
 
     // Test Road, true if there is NOT a Vehicle at the given int xPosition 
     Road roadRight = new Road(1, new ArrayList<Vehicle>(Arrays.asList(new Vehicle(1, 2, true),
-    new Vehicle(6, 3, true))));
+      new Vehicle(6, 3, true))));
     Road roadLeft = new Road(1, new ArrayList<Vehicle>(Arrays.asList(new Vehicle(1, 2, false),
-    new Vehicle(6, 3, false))));
+      new Vehicle(6, 3, false))));
     // semi open interval 
     // direction of car irrelevant to this computation 
     // note opposite behavior from LogRiver 
-    Assert.assertEquals(true, roadRight.stableGround(0));
-    Assert.assertEquals(true, roadLeft.stableGround(0));
-    Assert.assertEquals(false, roadRight.stableGround(1));
-    Assert.assertEquals(false, roadLeft.stableGround(1));
-    Assert.assertEquals(false, roadRight.stableGround(2));
-    Assert.assertEquals(false, roadLeft.stableGround(2));
-    Assert.assertEquals(true, roadRight.stableGround(3));
-    Assert.assertEquals(true, roadLeft.stableGround(3));
+    Assert.assertTrue(roadRight.stableGround(0));
+    Assert.assertTrue(roadLeft.stableGround(0));
+    Assert.assertFalse(roadRight.stableGround(1));
+    Assert.assertFalse(roadLeft.stableGround(1));
+    Assert.assertFalse(roadRight.stableGround(2));
+    Assert.assertFalse(roadLeft.stableGround(2));
+    Assert.assertTrue(roadRight.stableGround(3));
+    Assert.assertTrue(roadLeft.stableGround(3));
   }
 
   @Test
@@ -90,25 +90,25 @@ public class Tests {
   public void testOverlapsLily() {
     Lily l = new Lily(0);
     Lily m = new Lily(8);
-    Assert.assertEquals(true, l.overlaps(0)); // on value
-    Assert.assertEquals(true, m.overlaps(8));
-    Assert.assertEquals(false, l.overlaps(1)); // upper bound 
-    Assert.assertEquals(false, m.overlaps(7)); // lower bound
+    Assert.assertTrue(l.overlaps(0)); // on value
+    Assert.assertTrue(m.overlaps(8));
+    Assert.assertFalse(l.overlaps(1)); // upper bound 
+    Assert.assertFalse(m.overlaps(7)); // lower bound
    }
 
   @Test 
   // test the method overlaps in Mover class
   public void testOverlapsMover() {
     Mover v = new Vehicle(2, 2, true);
-    Assert.assertEquals(false, v.overlaps(1)); // lower val 
-    Assert.assertEquals(true, v.overlaps(2)); // start of space 
-    Assert.assertEquals(true, v.overlaps(3));
-    Assert.assertEquals(false, v.overlaps(4)); // semi open interval [2, 4)
+    Assert.assertFalse(v.overlaps(1)); // lower val 
+    Assert.assertTrue(v.overlaps(2)); // start of space 
+    Assert.assertTrue(v.overlaps(3));
+    Assert.assertFalse(v.overlaps(4)); // semi open interval [2, 4)
 
     Mover l = new Log(5, 1, false);
-    Assert.assertEquals(false, l.overlaps(4));
-    Assert.assertEquals(true, l.overlaps(5));
-    Assert.assertEquals(false, l.overlaps(6));
+    Assert.assertFalse(l.overlaps(4));
+    Assert.assertTrue(l.overlaps(5));
+    Assert.assertFalse(l.overlaps(6));
   }
 
   @Test 
@@ -123,16 +123,16 @@ public class Tests {
     Mover aRight = new Vehicle(8, 3, true);
     Mover aLeft = new Vehicle(0, 4, false);
     Mover aSafeLeft = new Vehicle(1, 2, false);
-    Assert.assertEquals(true, aRight.movesOffScreen(11));
-    Assert.assertEquals(false, aRight.movesOffScreen(12));
-    Assert.assertEquals(true, aLeft.movesOffScreen(8));
-    Assert.assertEquals(false, aSafeLeft.movesOffScreen(10));
+    Assert.assertTrue(aRight.movesOffScreen(11));
+    Assert.assertFalse(aRight.movesOffScreen(12));
+    Assert.assertTrue(aLeft.movesOffScreen(8));
+    Assert.assertFalse(aSafeLeft.movesOffScreen(10));
   }
 
   @Test
   // test validRow in Row classes
   public void testValidRow() {
-    
+
   }
 
   @Test 
