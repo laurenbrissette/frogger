@@ -3,7 +3,18 @@ package src;
 // represents a horizontal strip that the frog is safe to step on 
 // the width of the gameboard without any threat 
 public class SafeStrip implements Row {
-  public void moveOnTick(int count) {
+
+  @Override
+  // determines whether this SafeStrip is the same as Object o
+  public boolean equals(Object o) {
+    if(!(o instanceof SafeStrip)) {
+      throw new IllegalArgumentException();
+    }
+    return true;
+  }
+
+  // moves all of the elements in the SafeStrip the necessary distance per tick 
+  public void moveOnTick(int count, int moveOnTick) {
     return;
   }
 
@@ -11,5 +22,17 @@ public class SafeStrip implements Row {
   // losing the game
   public boolean stableGround(int xVal) {
     return true;
+  }
+
+  // determines whether this SafeStrip is valid. A Row is valid when 
+   // (a) no Rows initially have invalid items (Logs, Vehicles, Lilies, etc.)
+   // (b) the last and only the last Row is an EndZone
+  public boolean validRow(int width, int thisY, int finalY) {
+    if(thisY == finalY) {
+      return false;
+    }
+    else {
+      return true;
+    }
   }
 }

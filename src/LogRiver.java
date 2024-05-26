@@ -7,10 +7,17 @@ public class LogRiver extends River {
   private final ArrayList<Log> logs;
   private final int speed; // in range [1,3], represents the number of ticks between movement
 
-
   LogRiver(ArrayList<Log> logs, int speed) {
     if(speed < 1) {
       throw new IllegalArgumentException("log speed must be a positive integer");
+    }
+    // confirms that every Log in the given list is moving in the same direction 
+    // before constructing a LogRiver s
+    for(int x = 1; x < logs.size() && !logs.isEmpty(); x += 1) {
+      if(!logs.get(x).sameDirection(logs.get(0))) {
+        throw new IllegalArgumentException("Cannot construct LogRiver when Log contents " 
+          + "are not all moving in the same direction");
+      }
     }
     this.logs = logs;
     this.speed = speed;
@@ -20,10 +27,22 @@ public class LogRiver extends River {
     this(logs, 1);
   }
 
-  public void moveOnTick(int count) {  
+  @Override 
+  // determines whether this LogRiver is the same as Object o
+  public boolean equals(Object o) {
+    if(!(o instanceof LogRiver)) {
+      throw new IllegalArgumentException();
+    }
+    LogRiver other = (LogRiver)o;
+    return new Utils().equalsWithoutOrder(this.logs, other.logs) 
+      && this.speed == other.speed;
+  }
+
+  // moves all of the elements in this LogRiver the necessary distance per tick 
+  public void moveOnTick(int count, int rowLength) {  
     if(count % speed == 0) {
       for(Log l : this.logs) {
-        l.step();
+        l.step(rowLength);
       }
     }
     else {
@@ -40,5 +59,26 @@ public class LogRiver extends River {
       }
     }
     return false;
+  }
+
+  // determines whether this LogRiver is valid. A Row is valid when 
+   // (a) no Rows initially have invalid items (Logs, Vehicles, Lilies, etc.)
+   // (b) the last and only the last Row is an EndZone
+  public boolean validRow(int width, int thisY, int finalY) {
+    // LogRiver cannot be final Row
+    if(thisY == finalY) {
+      return false;
+    }
+    // you should always be able to cross the river
+    if(this.logs.size() == 0) {
+      return false;
+    }
+    // confirm all logs are vaild 
+    for(Log l : this.logs) {
+      if(!l.within(width)) {
+        return false;
+      }
+    }
+    return true;
   }
 }
