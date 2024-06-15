@@ -2,7 +2,7 @@ package src;
 
 // represents a stable lilypad in the river.  Lilies are a square of tile size 1.
 public class Lily {
-  private final int xVal; // represents the distance in blocks from the left of the screen 
+  final int xVal; // represents the distance in blocks from the left of the screen 
   Lily(int xVal) {
     this.xVal = xVal;
   }
@@ -27,4 +27,5 @@ public class Lily {
   public boolean within(int endpoint) {
     return 0 <= this.xVal && this.xVal < endpoint;
   }
+
 }

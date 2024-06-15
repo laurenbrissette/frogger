@@ -1,5 +1,9 @@
 package src;
 
+import java.awt.Color;
+
+import javax.swing.JPanel;
+
 // represents a horizontal strip that the frog is safe to step on 
 // the width of the gameboard without any threat 
 public class SafeStrip implements Row {
@@ -34,5 +38,12 @@ public class SafeStrip implements Row {
     else {
       return true;
     }
+  }
+
+  public JPanel render(int width, int tilesize) {
+    JPanel result = new JPanel();
+    result.setBackground(Color.GREEN);
+    result.setSize(width * tilesize, tilesize);
+    return result;
   }
 }

@@ -3,7 +3,7 @@ package src;
 // represents a game board element that moves horizontally across the screen in relation to the tick 
 abstract public class Mover {
   protected int xVal; // represents the distance in blocks from the left of the screen 
-  protected int size; // represents the length of the log (decreases as moving off screen)
+  int size; // represents the length of the log (decreases as moving off screen)
   protected boolean movesRight; // true if the object moves left to right, else opposite direction 
 
   Mover(int xVal, int size, boolean movesRight) {

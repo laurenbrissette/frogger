@@ -1,5 +1,9 @@
 package src;
+import java.awt.Color;
 import java.util.ArrayList;
+
+import javax.swing.JLayeredPane;
+import javax.swing.JPanel;
 
 // represents a River row which characteristically contains logs floating across it 
 // either right to left or vice versa
@@ -80,5 +84,19 @@ public class LogRiver extends River {
       }
     }
     return true;
+  }
+
+  public JPanel render(int width, int tilesize) {
+    JPanel result = new JPanel();
+    result.setBackground(new Color(179, 229, 252));
+    result.setSize(width * tilesize, tilesize);
+    for(Log l : this.logs) {
+      JPanel item = new JPanel();
+      item.setBackground(new Color(121, 85, 72));
+      item.setBounds(l.xVal * tilesize, 0, tilesize * l.size, tilesize);
+      result.add(item, JLayeredPane.PALETTE_LAYER);
+    }
+    result.setLayout(null);
+    return result;
   }
 }

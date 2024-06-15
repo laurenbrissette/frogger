@@ -1,5 +1,7 @@
 package src;
 
+import javax.swing.JPanel;
+
 // represents a horizontal strip/row in the game for the frog to 
 // step on 
 public interface Row {
@@ -24,4 +26,7 @@ public interface Row {
    // (a) no Rows initially have invalid items (Logs, Vehicles, Lilies, etc.)
    // (b) the last and only the last Row is an EndZone
    public boolean validRow(int width, int thisY, int finalY);
+
+   // renders the image
+   public JPanel render(int width, int tilesize);
 }

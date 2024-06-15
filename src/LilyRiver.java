@@ -1,5 +1,9 @@
 package src;
+import java.awt.Color;
 import java.util.ArrayList;
+
+import javax.swing.JLayeredPane;
+import javax.swing.JPanel;
 
 // represents a row of the river with lily pads 
 public class LilyRiver extends River {
@@ -53,5 +57,19 @@ public class LilyRiver extends River {
       }
     }
     return true;
+  }
+
+  public JPanel render(int width, int tilesize) {
+    JPanel result = new JPanel();
+    result.setBackground(new Color(179, 229, 252));
+    result.setSize(width * tilesize, tilesize);
+    for(Lily l : this.lilypads) {
+      JPanel item = new JPanel();
+      item.setBackground(Color.GREEN);
+      item.setBounds(l.xVal * tilesize, 0, tilesize, tilesize);
+      result.add(item, JLayeredPane.PALETTE_LAYER);
+    }
+    result.setLayout(null);
+    return result;
   }
 }

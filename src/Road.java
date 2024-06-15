@@ -1,6 +1,10 @@
 package src;
 
+import java.awt.Color;
 import java.util.ArrayList;
+
+import javax.swing.JLayeredPane;
+import javax.swing.JPanel;
 
 // represents a street the frog must cross with moving car obstacles 
 public class Road implements Row {
@@ -79,5 +83,19 @@ public class Road implements Row {
       }
     }
     return true;
+  }
+
+  public JPanel render(int width, int tilesize) {
+    JPanel result = new JPanel();
+    result.setBackground(new Color(179, 229, 252));
+    result.setSize(width * tilesize, tilesize);
+    for(Vehicle l : this.vehicles) {
+      JPanel item = new JPanel();
+      item.setBackground(new Color(121, 85, 72));
+      item.setBounds(l.xVal * tilesize, 0, tilesize * l.size, tilesize);
+      result.add(item, JLayeredPane.PALETTE_LAYER);
+    }
+    result.setLayout(null);
+    return result;
   }
 }

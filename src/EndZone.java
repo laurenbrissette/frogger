@@ -1,5 +1,9 @@
 package src;
 
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import java.awt.Color;
+
 // represents the horizontal strip the player needs to navigate the 
 // frog to in order to win 
 public class EndZone implements Row {
@@ -34,5 +38,19 @@ public class EndZone implements Row {
     else {
       return true;
     }
+  }
+
+  public JPanel render(int width, int tilesize) {
+    JPanel result = new JPanel();
+    result.setBackground(Color.BLACK);
+    result.setSize(width * tilesize, tilesize);
+  
+    JLabel label = new JLabel();
+    label.setText("END ZONE");
+    label.setHorizontalTextPosition(JLabel.CENTER);
+    label.setVerticalTextPosition(JLabel.CENTER);
+    label.setForeground(Color.WHITE);
+    result.add(label);
+    return result;
   }
 }

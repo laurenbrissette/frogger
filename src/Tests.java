@@ -104,7 +104,6 @@ public class Tests {
     Assert.assertTrue(v.overlaps(2)); // start of space 
     Assert.assertTrue(v.overlaps(3));
     Assert.assertFalse(v.overlaps(4)); // semi open interval [2, 4)
-
     Mover l = new Log(5, 1, false);
     Assert.assertFalse(l.overlaps(4));
     Assert.assertTrue(l.overlaps(5));
@@ -114,7 +113,30 @@ public class Tests {
   @Test 
   // test the method step in Mover class
   public void testStepMover() {
-
+    // does not move off screen and moves right 
+    Mover one = new Vehicle(2, 3, true);
+    Assert.assertEquals(new Vehicle(2, 3, true), one);
+    one.step(10);
+    Assert.assertEquals(new Vehicle(3, 3, true), one);
+    // does not move off screen and moves left 
+    Mover two = new Vehicle(3, 1, false);
+    Assert.assertEquals(new Vehicle(3, 1, false), two);
+    two.step(5);
+    Assert.assertEquals(new Vehicle(2, 1, false), two);
+    // moves off of screen and moves right 
+    Mover three = new Vehicle(2, 4, true);
+    Assert.assertEquals(new Vehicle(2, 4, true), three);
+    Assert.assertTrue(three.within(6));
+    Assert.assertTrue(three.movesOffScreen(6));
+    three.step(6);
+    Assert.assertEquals(new Vehicle(3, 3, true), three);
+    // moves off screen and moves left
+    Mover four = new Vehicle(0, 5, false);
+    Assert.assertEquals(new Vehicle(0, 5, false), four);
+    Assert.assertTrue(four.within(9));
+    Assert.assertTrue(four.movesOffScreen(9));
+    four.step(9);
+    Assert.assertEquals(new Vehicle(0,4,false), four);
   }
 
   @Test 
@@ -130,10 +152,47 @@ public class Tests {
   }
 
   @Test
-  // test validRow in Row classes
-  public void testValidRow() {
-
+  // test validRow in EndZone class
+  public void testValidRowEndZone() {
+    EndZone one = new EndZone();
+    Assert.assertFalse(one.validRow(10, 2, 3));
+    Assert.assertTrue(one.validRow(9, 5, 5));
   }
+
+  @Test 
+  // test validRow in LilyRiver class
+  public void testValidRowLilyRiver() {
+    LilyRiver one = new LilyRiver(new ArrayList<Lily>());
+    LilyRiver two = new LilyRiver(new ArrayList<Lily>(
+      Arrays.asList(new Lily(3), new Lily(0), new Lily(-2))));
+    LilyRiver three = new LilyRiver(new ArrayList<Lily>(
+      Arrays.asList(new Lily(2), new Lily(6), new Lily(9))));
+    Assert.assertFalse(one.validRow(4, 2, 5));
+    Assert.assertFalse(two.validRow(5, 3, 7));
+    Assert.assertTrue(three.validRow(10, 7, 8));
+    Assert.assertFalse(three.validRow(9, 2, 4));
+  }
+  
+  @Test
+  // test validRow in LogRiver class
+  public void testValidRowLogRiver() {
+    LogRiver one = new LogRiver(new ArrayList<Log>());
+    LogRiver two = new LogRiver(new ArrayList<Log>(
+      Arrays.asList(new Log(4, 2, true))));
+    Assert.assertFalse(one.validRow(5, 2, 4));
+  }
+
+  @Test
+  // test validRow in SafeStrip class
+  public void testValidRowSafeStrip() {
+    SafeStrip one = new SafeStrip();
+    Assert.assertTrue(one.validRow(8, 3, 4));
+    Assert.assertFalse(one.validRow(3, 4, 4));
+  }
+
+  @Test
+  // test validRow in Road class
+  public void testValidRowRoad() {}
 
   @Test 
   // test within in Lily class
@@ -147,7 +206,6 @@ public class Tests {
     Assert.assertFalse(negOne.within(4));
     Assert.assertFalse(eight.within(8));
     Assert.assertTrue(eight.within(9));
-
   }
 
   @Test
@@ -297,5 +355,6 @@ public class Tests {
     Assert.assertEquals(one, three);
     Assert.assertNotEquals(one, four);
   }
+
 
 }
