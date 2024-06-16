@@ -1,6 +1,5 @@
 package src;
 
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import java.awt.Color;
 
@@ -40,17 +39,17 @@ public class EndZone implements Row {
     }
   }
 
+  // renders this EndZone
   public JPanel render(int width, int tilesize) {
     JPanel result = new JPanel();
-  
-    JLabel label = new JLabel();
     result.setBackground(Color.BLACK);
     result.setSize(width * tilesize, tilesize);
     result.setOpaque(true);
-    result.add(label);
     return result;
   }
 
+  // determines the distance/direction moved at x location which a frog would be 
+  // carried (nonzero only applicable for log rivers)
   public int amountCarriedAt(int count, int x) {
     return 0;
   }

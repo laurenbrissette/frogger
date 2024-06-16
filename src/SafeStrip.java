@@ -40,6 +40,7 @@ public class SafeStrip implements Row {
     }
   }
 
+  // renders this SafeStrip as a JPanel
   public JPanel render(int width, int tilesize) {
     JPanel result = new JPanel();
     result.setBackground(new Color(83, 172, 86));

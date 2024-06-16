@@ -86,6 +86,7 @@ public class LogRiver extends River {
     return true;
   }
 
+  // renders this LogRiver as a JPanel
   public JPanel render(int width, int tilesize) {
     JPanel result = new JPanel();
     result.setBackground(new Color(179, 229, 252));
@@ -100,6 +101,8 @@ public class LogRiver extends River {
     return result;
   }
 
+  // determines the distance/direction moved at x location which a frog would be 
+  // carried (nonzero only applicable for log rivers)
   public int amountCarriedAt(int count, int x) {
     if(this.stableGround(x) && count % this.speed == 0) {
       if(this.logs.get(0).movesRight) {

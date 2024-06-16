@@ -63,6 +63,7 @@ public class LilyRiver extends River {
     return true;
   }
 
+  // renders this LilyRiver as a JPanel
   public JPanel render(int width, int tilesize) {
     if(this.image != null) {
       return this.image;
@@ -82,6 +83,8 @@ public class LilyRiver extends River {
     return result;
   }
 
+   // determines the distance/direction moved at x location which a frog would be 
+   // carried (nonzero only applicable for log rivers)
   public int amountCarriedAt(int count, int x) {
     return 0;
   }

@@ -55,7 +55,6 @@ public class Road implements Row {
     }
   }
 
-  
   // determines whether the frog can move to this x value on this LogRiver without 
   // losing the game
   public boolean stableGround(int xVal) {
@@ -85,6 +84,7 @@ public class Road implements Row {
     return false;
   }
 
+  // renders this Road
   public JPanel render(int width, int tilesize) {
     JPanel result = new JPanel();
     result.setBackground(Color.BLACK);
@@ -99,8 +99,9 @@ public class Road implements Row {
     return result;
   }
 
-  @Override
-  public int amountCarriedAt(int count, int x) {
+   // determines the distance/direction moved at x location which a frog would be 
+   // carried (nonzero only applicable for log rivers)
+   public int amountCarriedAt(int count, int x) {
     return 0;
   }
 }

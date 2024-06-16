@@ -1,6 +1,4 @@
 package src;
-
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -9,7 +7,6 @@ import java.util.ArrayList;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
-import javax.swing.Timer;
 
 // represents the full board of the game 
 public class Board extends JPanel implements KeyListener{
@@ -19,7 +16,6 @@ public class Board extends JPanel implements KeyListener{
   private int count; // represents the number of times moveOnTick has been called on this Board
   private final int tilesize;
   final Frog frog;
-  private final Timer timer;
 
   Board(ArrayList<Row> rows, int height, int width) {
     /* VARIABLES AND FIELDS */
@@ -39,7 +35,6 @@ public class Board extends JPanel implements KeyListener{
     this.width = width;
     this.tilesize = 60;
     this.frog = new Frog(new Position(this.width / 2, 0));
-    this.timer = new Timer(1000, null);
     this.addKeyListener(this);
     // make final adjustments for result configuration 
     
@@ -83,14 +78,16 @@ public class Board extends JPanel implements KeyListener{
     this.setSize(this.tilesize * this.width, this.tilesize * this.height + titleStripHeight); //set size of panel 
     // add image for frog to board
     JLabel frogImg;
-    if(this.gameLost()) {
+    if(this.gameLost()) { // if lost, frog is displayed as a splat
       frogImg = this.frog.render(this.tilesize, true);
     }
-    else {
+    else { // if still playing, frog displayed as a frog
       frogImg = this.frog.render(this.tilesize, false);
     }
-    frogImg.setBounds(this.frog.position.x * this.tilesize, (this.height - this.frog.position.y - 1) * this.tilesize,
-      this.tilesize, this.tilesize);
+    frogImg.setBounds(this.frog.position.x * this.tilesize, 
+      (this.height - this.frog.position.y - 1) * this.tilesize,
+      this.tilesize, 
+      this.tilesize);
     this.add(frogImg);
     // if number of rows is less than height, throw 
     if(this.rows.size() < this.height) {
@@ -99,7 +96,8 @@ public class Board extends JPanel implements KeyListener{
     // add the rows to the screen
     for(int x = 0; x < this.height; x += 1) {
       JPanel item = this.rows.get(x).render(this.width, this.tilesize);
-      item.setBounds(0, ((this.height - 1) * this.tilesize) - x * this.tilesize,
+      item.setBounds(0, 
+        ((this.height - 1) * this.tilesize) - x * this.tilesize,
         this.width * this.tilesize, 
         this.tilesize);
       this.add(item, JLayeredPane.DEFAULT_LAYER);
