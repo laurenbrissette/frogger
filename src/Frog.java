@@ -1,12 +1,9 @@
 package src;
 
-import java.awt.Color;
 import java.awt.Image;
 
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 
 // represents the game piece (frog) the player navigates through the game  
 public class Frog {
@@ -46,6 +43,6 @@ public class Frog {
 
   // moves the position of this Frog one space up 
   public void moveUp() {
-    this.position = new Position(this.position.x, this.position.y + 1);
+    this.position = new Position(this.position.x, this.position.y - 1);
   }
 }

@@ -1,29 +1,34 @@
 package src;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
-import javax.swing.JFrame;
+import javax.swing.AbstractAction;
+import javax.swing.Action;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
+import javax.swing.KeyStroke;
 import javax.swing.Timer;
 
 // represents the full board of the game 
-public class Board implements KeyListener, ActionListener {
+public class Board extends JPanel implements KeyListener{
   private final ArrayList<Row> rows;
   private final int height; // the number of rows displayed on the screen at a time
   private final int width;
   private int count; // represents the number of times moveOnTick has been called on this Board
   private final int tilesize;
-  private final Frog frog;
+  final Frog frog;
   private final Timer timer;
+
   Board(ArrayList<Row> rows, int height, int width) {
+    /* VARIABLES AND FIELDS */
     // checks that the row to height ratio is valid 
     if(rows.size() < height) {
       throw new IllegalArgumentException("Cannot create a board with a larger height than number of rows");
@@ -34,7 +39,6 @@ public class Board implements KeyListener, ActionListener {
         throw new IllegalArgumentException("Failed to create board because row " + y + " is invalid");
       }
     }
-
     this.rows = rows;
     this.height = height;
     this.count = 0;
@@ -42,6 +46,10 @@ public class Board implements KeyListener, ActionListener {
     this.tilesize = 60;
     this.frog = new Frog(new Position(this.width / 2, this.height - 1));
     this.timer = new Timer(1000, null);
+    this.addKeyListener(this);
+    // make final adjustments for result configuration 
+    
+    this.render();
   }
 
   @Override
@@ -63,16 +71,25 @@ public class Board implements KeyListener, ActionListener {
     for(Row r : this.rows) {
       r.moveOnTick(this.count, this.width);
     }
+    this.count = this.count + 1;
+    this.render();
   }
   
-  public JFrame render() {
-    JFrame result = new JFrame();
-    result.setLayout(null);
+  public void keyTyped(KeyEvent e) {}
+  public void keyReleased(KeyEvent e) {}
+
+  public void render() {
+    this.removeAll();
+    System.out.println("rendercalled");
     // create frog image and set add to frame
+    int titleStripHeight = 28;
+    this.setLayout(null);
+    this.setSize(this.tilesize * this.width, this.tilesize * this.height + titleStripHeight);
+    this.isFocusable();
     JLabel frogImg = this.frog.render(this.tilesize);
     frogImg.setBounds(this.frog.position.x * this.tilesize, this.frog.position.y * this.tilesize,
       this.tilesize, this.tilesize);
-    result.add(frogImg, JLayeredPane.PALETTE_LAYER);
+    this.add(frogImg, JLayeredPane.PALETTE_LAYER);
     // if the number of rows available is less than the height (the number that is supposed to be displayed)
     // for some reason, throw an error 
     if(this.rows.size() < this.height) {
@@ -84,55 +101,28 @@ public class Board implements KeyListener, ActionListener {
       item.setBounds(0, ((this.height - 1) * this.tilesize) - x * this.tilesize,
         this.width * this.tilesize, 
         this.tilesize);
-      result.add(item, JLayeredPane.DEFAULT_LAYER);
+      this.add(item, JLayeredPane.DEFAULT_LAYER);
     }
-    // make final adjustments for result configuration 
-    int titleStripHeight = 28;
-    result.setSize(this.tilesize * this.width, this.tilesize * this.height + titleStripHeight);
-    result.setTitle("Frogger");
-    result.setResizable(true);
-    result.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    result.setVisible(true);
-    result.setLocationRelativeTo(null);
-    result.addKeyListener(this);
-    return result;
+    this.setVisible(true);
   }
-
-  // moves the frog accordingly when key is pressed
-  public void keyTyped(KeyEvent e) {
-    if(e.getKeyCode() == 37 && this.frog.position.x != 0) { // left and valid move 
-      // update frog position 
+  
+  public void keyPressed(KeyEvent e) {
+    if(e.getKeyCode() == KeyEvent.VK_LEFT && this.frog.position.x != 0) {
       this.frog.moveLeft();
+      render();
     }
-    else if(e.getKeyCode() == 38) {// up (always valid)
-      // update frog position
+    if(e.getKeyCode() == KeyEvent.VK_RIGHT && this.frog.position.x != this.width - 1) {
+      this.frog.moveRight();
+      render();
+    }
+    if(e.getKeyCode() == KeyEvent.VK_UP) {
       this.frog.moveUp();
-      // determine whether you can afford to delete this row for the display
-      // if so, remove
-      if(this.rows.size() - 1 >= height) {
+      if(this.height <= this.rows.size() - 1) {
         this.rows.remove(0);
       }
     }
-    else if(e.getKeyCode() == 39 && this.frog.position.x != this.width - 1) { // right and valid move
-      // update frog position 
-      this.frog.moveRight();
-    }
-  }
+  } 
 
-  public void keyPressed(KeyEvent e) {
-    return;
-  }
 
-  public void keyReleased(KeyEvent e) {
-    return;
-  }
-
-  @Override
-  public void actionPerformed(ActionEvent e) {
-    for(Row r : this.rows) {
-      r.moveOnTick(this.count, this.width);
-    }
-    this.count = this.count + 1;
-  }
 
 }

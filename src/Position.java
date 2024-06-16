@@ -2,8 +2,8 @@ package src;
 
 // represents an x,y coordinate in tile squares 
 public class Position {
-  final int x;
-  final int y;
+  int x;
+  int y;
   
   Position(int x, int y) {
     this.x = x;
