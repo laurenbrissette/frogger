@@ -42,8 +42,13 @@ public class SafeStrip implements Row {
 
   public JPanel render(int width, int tilesize) {
     JPanel result = new JPanel();
-    result.setBackground(Color.GREEN);
+    result.setBackground(new Color(83, 172, 86));
     result.setSize(width * tilesize, tilesize);
     return result;
+  }
+
+  @Override
+  public int amountCarriedAt(int count, int x) {
+    return 0;
   }
 }

@@ -42,15 +42,16 @@ public class EndZone implements Row {
 
   public JPanel render(int width, int tilesize) {
     JPanel result = new JPanel();
-    result.setBackground(Color.BLACK);
-    result.setSize(width * tilesize, tilesize);
   
     JLabel label = new JLabel();
-    label.setText("END ZONE");
-    label.setHorizontalTextPosition(JLabel.CENTER);
-    label.setVerticalTextPosition(JLabel.CENTER);
-    label.setForeground(Color.WHITE);
+    result.setBackground(Color.BLACK);
+    result.setSize(width * tilesize, tilesize);
+    result.setOpaque(true);
     result.add(label);
     return result;
+  }
+
+  public int amountCarriedAt(int count, int x) {
+    return 0;
   }
 }

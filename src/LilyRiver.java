@@ -1,13 +1,17 @@
 package src;
 import java.awt.Color;
+import java.awt.Image;
 import java.util.ArrayList;
 
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 
 // represents a row of the river with lily pads 
 public class LilyRiver extends River {
   private final ArrayList<Lily> lilypads;
+  private JPanel image;
   LilyRiver(ArrayList<Lily> lilypads) {
     this.lilypads = lilypads;
   }
@@ -60,16 +64,25 @@ public class LilyRiver extends River {
   }
 
   public JPanel render(int width, int tilesize) {
+    if(this.image != null) {
+      return this.image;
+    }
     JPanel result = new JPanel();
     result.setBackground(new Color(179, 229, 252));
     result.setSize(width * tilesize, tilesize);
+    ImageIcon img = new ImageIcon(new ImageIcon("src/images/lilypad.png").getImage().getScaledInstance(tilesize, tilesize, Image.SCALE_SMOOTH));
     for(Lily l : this.lilypads) {
-      JPanel item = new JPanel();
-      item.setBackground(Color.GREEN);
+      JLabel item = new JLabel();
+      item.setIcon(img);
       item.setBounds(l.xVal * tilesize, 0, tilesize, tilesize);
       result.add(item, JLayeredPane.PALETTE_LAYER);
     }
     result.setLayout(null);
+    this.image = result;
     return result;
+  }
+
+  public int amountCarriedAt(int count, int x) {
+    return 0;
   }
 }

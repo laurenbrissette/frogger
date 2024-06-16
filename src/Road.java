@@ -61,10 +61,10 @@ public class Road implements Row {
   public boolean stableGround(int xVal) {
     for(Vehicle v : this.vehicles) {
       if(v.overlaps(xVal)) {
-        return false;
+        return true;
       }
     }
-    return true;
+    return false;
   }
 
   // determines whether this Road is valid. A Row is valid when 
@@ -79,23 +79,28 @@ public class Road implements Row {
     // confirm all vehicle locations are valid 
     for(Vehicle v : this.vehicles) {
       if(!v.within(width)) {
-        return false;
+        return true;
       }
     }
-    return true;
+    return false;
   }
 
   public JPanel render(int width, int tilesize) {
     JPanel result = new JPanel();
-    result.setBackground(new Color(179, 229, 252));
+    result.setBackground(Color.BLACK);
     result.setSize(width * tilesize, tilesize);
     for(Vehicle l : this.vehicles) {
       JPanel item = new JPanel();
-      item.setBackground(new Color(121, 85, 72));
+      item.setBackground(Color.RED);
       item.setBounds(l.xVal * tilesize, 0, tilesize * l.size, tilesize);
       result.add(item, JLayeredPane.PALETTE_LAYER);
     }
     result.setLayout(null);
     return result;
+  }
+
+  @Override
+  public int amountCarriedAt(int count, int x) {
+    return 0;
   }
 }

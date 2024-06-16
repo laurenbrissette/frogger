@@ -92,11 +92,24 @@ public class LogRiver extends River {
     result.setSize(width * tilesize, tilesize);
     for(Log l : this.logs) {
       JPanel item = new JPanel();
-      item.setBackground(new Color(121, 85, 72));
+      item.setBackground(new Color(65, 44, 40));
       item.setBounds(l.xVal * tilesize, 0, tilesize * l.size, tilesize);
       result.add(item, JLayeredPane.PALETTE_LAYER);
     }
     result.setLayout(null);
     return result;
   }
+
+  public int amountCarriedAt(int count, int x) {
+    if(this.stableGround(x) && count % this.speed == 0) {
+      if(this.logs.get(0).movesRight) {
+        return 1;
+      }
+      else {
+        return -1;
+      }
+    }
+    return 0;
+  }
+
 }
