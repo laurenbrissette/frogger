@@ -48,7 +48,8 @@ public class SafeStrip implements Row {
     return result;
   }
 
-  @Override
+   // determines the distance/direction moved at x location which a frog would be 
+   // carried (nonzero only applicable for log rivers)
   public int amountCarriedAt(int count, int x) {
     return 0;
   }

@@ -1,11 +1,16 @@
 package src;
 
+import java.awt.Image;
+
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+
 // represents a game board element that moves horizontally across the screen in relation to the tick 
 abstract public class Mover {
   protected int xVal; // represents the distance in blocks from the left of the screen 
   int size; // represents the length of the log (decreases as moving off screen)
   protected boolean movesRight; // true if the object moves left to right, else opposite direction 
-
+  JLabel image;
   Mover(int xVal, int size, boolean movesRight) {
     if(size < 1) {
       throw new IllegalArgumentException("Mover size must be a positive integer");
@@ -79,4 +84,5 @@ abstract public class Mover {
   public boolean sameDirection(Mover other) {
     return this.movesRight == other.movesRight;
   }
+
 }

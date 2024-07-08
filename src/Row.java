@@ -30,7 +30,7 @@ public interface Row {
    // renders the image
    public JPanel render(int width, int tilesize);
 
-   // determines the distance/direction moved at that location which a frog would be 
+   // determines the distance/direction moved at x location which a frog would be 
    // carried (only applicable for log rivers)
    public int amountCarriedAt(int count, int x);
 }

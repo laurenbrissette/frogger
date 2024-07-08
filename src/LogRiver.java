@@ -1,6 +1,7 @@
 package src;
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.Random;
 
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
@@ -45,8 +46,31 @@ public class LogRiver extends River {
   // moves all of the elements in this LogRiver the necessary distance per tick 
   public void moveOnTick(int count, int rowLength) {  
     if(count % speed == 0) {
-      for(Log l : this.logs) {
-        l.step(rowLength);
+      for(int x = 0; x < this.logs.size(); x += 1) {
+        Log operator = this.logs.get(x);
+        operator.step(rowLength);
+        // if log now off screen, remove it and generate a new one
+        if(operator.size == 0) {
+          this.logs.remove(x); 
+          x = x - 1;
+        }
+        if(operator.size == 0) {
+          int xVal;
+          boolean movesRight;
+          int lowerBound = 1;
+          int upperBound = rowLength / 4;
+          int size = new Random().nextInt(lowerBound + upperBound) + lowerBound;
+          if(operator.movesRight) {
+            movesRight = true;
+            xVal = -1;
+          }
+          else {
+            movesRight = false;
+            xVal = rowLength - 1;
+          }
+          this.logs.add(new Log(xVal, size, movesRight));
+        }
+        
       }
     }
     else {

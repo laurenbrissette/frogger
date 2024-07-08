@@ -2,6 +2,7 @@ package src;
 
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.Random;
 
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
@@ -48,10 +49,36 @@ public class Road implements Row {
 
   // moves all of the elements in the Road the necessary distance per tick 
   public void moveOnTick(int count, int rowLength) {
-    if(count % this.speed == 0) {
-      for(Vehicle v : this.vehicles) {
-        v.step(rowLength);
+     if(count % speed == 0) {
+      for(int x = 0; x < this.vehicles.size(); x += 1) {
+        Vehicle operator = this.vehicles.get(x);
+        operator.step(rowLength);
+        // if log now off screen, remove it and generate a new one
+        if(operator.size == 0) {
+          this.vehicles.remove(x); 
+          x = x - 1;
+        }
+        if(operator.size == 0) {
+          int xVal;
+          boolean movesRight;
+          int lowerBound = 1;
+          int upperBound = rowLength / 4;
+          int size = new Random().nextInt(lowerBound + upperBound) + lowerBound;
+          if(operator.movesRight) {
+            movesRight = true;
+            xVal = -1;
+          }
+          else {
+            movesRight = false;
+            xVal = rowLength - 1;
+          }
+          this.vehicles.add(new Vehicle(xVal, size, movesRight));
+        }
+        
       }
+    }
+    else {
+      return;
     }
   }
 
@@ -60,34 +87,33 @@ public class Road implements Row {
   public boolean stableGround(int xVal) {
     for(Vehicle v : this.vehicles) {
       if(v.overlaps(xVal)) {
-        return true;
+        return false;
       }
     }
-    return false;
+    return true;
   }
 
   // determines whether this Road is valid. A Row is valid when 
    // (a) no Rows initially have invalid items (Logs, Vehicles, Lilies, etc.)
    // (b) the last and only the last Row is an EndZone
   public boolean validRow(int width, int thisY, int finalY) {
-    // check not final Row
+    // LogRiver cannot be final Row
     if(thisY == finalY) {
-      throw new IllegalArgumentException("Road cannot be final Row");
+      return false;
     }
-    // note, road may have no vehicles
-    // confirm all vehicle locations are valid 
-    for(Vehicle v : this.vehicles) {
-      if(!v.within(width)) {
-        return true;
+    // confirm all logs are vaild 
+    for(Vehicle l : this.vehicles) {
+      if(!l.within(width)) {
+        return false;
       }
     }
-    return false;
+    return true;
   }
 
   // renders this Road
   public JPanel render(int width, int tilesize) {
     JPanel result = new JPanel();
-    result.setBackground(Color.BLACK);
+    result.setBackground(new Color(125, 130, 126));
     result.setSize(width * tilesize, tilesize);
     for(Vehicle l : this.vehicles) {
       JPanel item = new JPanel();
