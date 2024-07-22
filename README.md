@@ -7,13 +7,13 @@ This application emulates "Frogger" and "Crossy Road", allowing players to move 
 ## Gameplay 
 Your goal is to get the frog from its starting position into the black "endzone", which will eventually be at the top of the screen.
 ### Controls: 
- up arrow: move frog up/forward
- left arrow: move frog left 
- right arrow: move frog right
+ **up arrow:** move frog up/forward
+ **left arrow:** move frog left 
+ **right arrow:** move frog right
  ** Note: Be careful!  Once you move up, you cannot move back!
 ### Rows:
-  green: safety, stay here as long as you like without threat 
-  blue with green spots: river with lilypads, green is safe, blue is not 
-  blue with moving brown rectangles: river with logs, brown is safe, blue is not (don't fall off!)
-  grey with red rectangles: road with vehicles, grey is safe, red is not (don't get hit!)
-  black: endzone, you've won!
+  **green:** safety, stay here as long as you like without threat 
+  **blue with green spots:** river with lilypads, green is safe, blue is not 
+  **blue with moving brown rectangles:** river with logs, brown is safe, blue is not (don't fall off!)
+  **grey with red rectangles:** road with vehicles, grey is safe, red is not (don't get hit!)
+  **black:** endzone, you've won!
