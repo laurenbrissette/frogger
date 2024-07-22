@@ -223,12 +223,6 @@ public class Tests {
     Assert.assertTrue(eight.within(10));
   }
 
-  @Test
-  // test moveOnTick in Board class
-  public void testMoveOnTick() {
-    
-  }
-
   @Test 
   // test equals for EndZone
   public void testEqualsEndZone() {
